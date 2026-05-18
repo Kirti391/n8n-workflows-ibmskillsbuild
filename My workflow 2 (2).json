@@ -1,0 +1,889 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1TQ8Sa0tUTJiv3UKWgwLbTa9PGrU3QrlIHbt4LIEv_Ag",
+          "mode": "list",
+          "cachedResultName": "Smart Food Management Form  (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TQ8Sa0tUTJiv3UKWgwLbTa9PGrU3QrlIHbt4LIEv_Ag/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "960522852",
+          "mode": "id"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -496,
+        -80
+      ],
+      "id": "f7689ff7-feb6-4539-b58a-732e7d4b3d0a",
+      "name": "Google Sheets Trigger",
+      "alwaysOutputData": false,
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "H4vNQFyetsyuGkEn",
+          "name": "Google Sheets Trigger OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "584de666-823b-4069-ba64-199b9d1778ef",
+              "name": "user_type",
+              "value": "={{$json[\"User Type\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "6a440d2d-8ab3-453c-a184-c02d7af07477",
+              "name": "food_type",
+              "value": "={{ $json['Food Type (Example: rice, vegetables, cooked food)  '] }}",
+              "type": "string"
+            },
+            {
+              "id": "bbf4c94c-93e7-4907-968d-5351f09bbb5e",
+              "name": "quantity",
+              "value": "={{ $json['Quantity (Example: 5 kg)'] }}",
+              "type": "string"
+            },
+            {
+              "id": "0dce6404-50b0-48eb-9eac-0a1f0084ad1c",
+              "name": "hours_old",
+              "value": "={{ $json['Time (Hours Old)  '] }}",
+              "type": "number"
+            },
+            {
+              "id": "fd306f35-5f72-4c71-909a-707a31d91ed5",
+              "name": "condition",
+              "value": "={{ $json['Condition  '] }}",
+              "type": "string"
+            },
+            {
+              "id": "316c14a8-5f5b-457c-a31b-388ddd442abb",
+              "name": "location",
+              "value": "={{ $json.Location }}",
+              "type": "string"
+            },
+            {
+              "id": "d6abdb8e-f140-44be-a9c0-6e9add384202",
+              "name": "food_category",
+              "value": "={{ $json['Food Category  '] }}",
+              "type": "string"
+            },
+            {
+              "id": "e8e7e7f4-7919-4bb7-bb08-eb7bc5335729",
+              "name": "storage",
+              "value": "={{ $json['Storage Condition'] }}",
+              "type": "string"
+            },
+            {
+              "id": "41b844d5-1b3b-47c9-ae87-ff1d86976c1d",
+              "name": "pickup",
+              "value": "={{ $json['Pickup Availability'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -336,
+        -80
+      ],
+      "id": "d642e9de-b09f-4c68-ad78-77753d56f619",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c705346f-762c-4400-8403-9cd04256cee5",
+              "name": "category",
+              "value": "={{$json[\"category\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "a67627ba-0757-41e9-a039-5e0547332c9d",
+              "name": "pickup",
+              "value": "={{ $json.pickup }}",
+              "type": "string"
+            },
+            {
+              "id": "f7e77e2c-bfec-49e8-a8f1-913741baf84d",
+              "name": "action",
+              "value": "={{$json[\"action\"]}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -16,
+        -80
+      ],
+      "id": "662bfbe0-6b76-4847-8496-df7085bfb692",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{$json[\"category\"]}}",
+                    "rightValue": "human",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "1b7210ae-2bc6-4a14-bfa4-6943882e8800"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "11b5f88f-d98b-42e8-943f-a3f3383dcb5b",
+                    "leftValue": "={{$json[\"category\"]}}",
+                    "rightValue": "animal",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "70fd0c97-6966-48f1-bf72-25e5319f2608",
+                    "leftValue": "={{$json[\"category\"]}}",
+                    "rightValue": "waste",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        144,
+        -96
+      ],
+      "id": "f09d348f-ac24-4342-af93-e484e0932927",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "sendTo": "recipient@example.com",
+        "subject": "=Food Donation Alert - {{ $('Code in JavaScript').item.json.food_type }}",
+        "emailType": "text",
+        "message": "={{ $('Code in JavaScript').item.json.quantity }} of {{ $('Code in JavaScript').item.json.hours_old }} hours old) is available at {{ $('Code in JavaScript').item.json.location }}.  Recommended action: {{$json[\"action\"]}}  Thank you!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        336,
+        -240
+      ],
+      "id": "67a029c6-5a92-4b1d-a23a-f9ee782b4753",
+      "name": "Send a message",
+      "webhookId": "044b8a46-5618-4b56-8c47-478f39b40029",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9bZAKRsWf53yHmeG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "farm@example.com",
+        "subject": "=Food Alert – {{$json[\"food_type\"]}} for Animals",
+        "emailType": "text",
+        "message": "=Hello,  {{$json[\"quantity\"]}} of {{$json[\"food_type\"]}} ({{$json[\"hours_old\"]}} hours old) is available at {{$json[\"location\"]}}.  Recommended action: {{$json[\"action\"]}}  Thank you!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        336,
+        -96
+      ],
+      "id": "034aaa8b-fd1d-46ec-b0c6-d34d593f4ed1",
+      "name": "Send a message1",
+      "webhookId": "fe66ee86-c93e-4b45-8add-1e69a8e3e1b2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9bZAKRsWf53yHmeG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "compost@example.com",
+        "subject": "=Food Waste Alert – {{ $('Code in JavaScript').item.json.food_type }}",
+        "emailType": "text",
+        "message": "=Hello, {{ $('Code in JavaScript').item.json.quantity }}Kg of{{ $('Code in JavaScript').item.json.food_type }} {{ $('Code in JavaScript').item.json.hours_old }} hours old) is available for composting at {{ $('Code in JavaScript').item.json.location }}.  Recommended action: {{$json[\"action\"]}}  Thank you!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        336,
+        112
+      ],
+      "id": "502aeb71-af08-4d3b-afbe-e0dca7ac8c67",
+      "name": "Send a message2",
+      "webhookId": "7336f3bc-6149-43cb-a013-9e2f76e3fb28",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9bZAKRsWf53yHmeG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1TQ8Sa0tUTJiv3UKWgwLbTa9PGrU3QrlIHbt4LIEv_Ag",
+          "mode": "list",
+          "cachedResultName": "Smart Food Management Form  (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TQ8Sa0tUTJiv3UKWgwLbTa9PGrU3QrlIHbt4LIEv_Ag/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 960522852,
+          "mode": "list",
+          "cachedResultName": "Form responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TQ8Sa0tUTJiv3UKWgwLbTa9PGrU3QrlIHbt4LIEv_Ag/edit#gid=960522852"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Food Type (Example: rice, vegetables, cooked food)  ": "={{$json[\"food_type\"]}}",
+            "Quantity (Example: 5 kg)": "={{$json[\"quantity\"]}}",
+            "Location": "={{$json[\"location\"]}}",
+            "Food Category  ": "={{$json[\"category\"]}}",
+            "Timestamp": "={{ $now }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "User Type",
+              "displayName": "User Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Food Type (Example: rice, vegetables, cooked food)  ",
+              "displayName": "Food Type (Example: rice, vegetables, cooked food)  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity (Example: 5 kg)",
+              "displayName": "Quantity (Example: 5 kg)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Time (Hours Old)  ",
+              "displayName": "Time (Hours Old)  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Condition  ",
+              "displayName": "Condition  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Contact Number",
+              "displayName": "Contact Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Food Category  ",
+              "displayName": "Food Category  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Storage Condition",
+              "displayName": "Storage Condition",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pickup Availability",
+              "displayName": "Pickup Availability",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        528,
+        -240
+      ],
+      "id": "e74c4c0c-30b6-40f0-b0bd-122fdec05fe9",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fd0fyuxAAklQebWx",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1TQ8Sa0tUTJiv3UKWgwLbTa9PGrU3QrlIHbt4LIEv_Ag",
+          "mode": "list",
+          "cachedResultName": "Smart Food Management Form  (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TQ8Sa0tUTJiv3UKWgwLbTa9PGrU3QrlIHbt4LIEv_Ag/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 960522852,
+          "mode": "list",
+          "cachedResultName": "Form responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TQ8Sa0tUTJiv3UKWgwLbTa9PGrU3QrlIHbt4LIEv_Ag/edit#gid=960522852"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $now }}",
+            "Food Type (Example: rice, vegetables, cooked food)  ": "={{$json[\"food_type\"]}}",
+            "Quantity (Example: 5 kg)": "={{$json[\"quantity\"]}}",
+            "Time (Hours Old)  ": "={{$json[\"hours_old\"]}}",
+            "Location": "={{$json[\"location\"]}}",
+            "Food Category  ": "={{$json[\"category\"]}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "User Type",
+              "displayName": "User Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Food Type (Example: rice, vegetables, cooked food)  ",
+              "displayName": "Food Type (Example: rice, vegetables, cooked food)  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity (Example: 5 kg)",
+              "displayName": "Quantity (Example: 5 kg)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Time (Hours Old)  ",
+              "displayName": "Time (Hours Old)  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Condition  ",
+              "displayName": "Condition  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Contact Number",
+              "displayName": "Contact Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Food Category  ",
+              "displayName": "Food Category  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Storage Condition",
+              "displayName": "Storage Condition",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pickup Availability",
+              "displayName": "Pickup Availability",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        544,
+        -96
+      ],
+      "id": "5abaf7da-ec57-4e42-be9d-32e03c9025f4",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fd0fyuxAAklQebWx",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1TQ8Sa0tUTJiv3UKWgwLbTa9PGrU3QrlIHbt4LIEv_Ag",
+          "mode": "list",
+          "cachedResultName": "Smart Food Management Form  (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TQ8Sa0tUTJiv3UKWgwLbTa9PGrU3QrlIHbt4LIEv_Ag/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 960522852,
+          "mode": "list",
+          "cachedResultName": "Form responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TQ8Sa0tUTJiv3UKWgwLbTa9PGrU3QrlIHbt4LIEv_Ag/edit#gid=960522852"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Storage Condition": "={{ $('Code in JavaScript').item.json.condition }}",
+            "Timestamp": "={{ $now }}",
+            "Food Type (Example: rice, vegetables, cooked food)  ": "={{ $('Code in JavaScript').item.json.food_type }}",
+            "Quantity (Example: 5 kg)": "={{ $('Code in JavaScript').item.json.quantity }}",
+            "Time (Hours Old)  ": "={{ $('Code in JavaScript').item.json.hours_old }}",
+            "Location": "={{ $('Code in JavaScript').item.json.location }}",
+            "Food Category  ": "={{ $('Code in JavaScript').item.json.food_category }}",
+            "Condition  ": "={{ $('Code in JavaScript').item.json.condition }}",
+            "Pickup Availability": "={{ $('Code in JavaScript').item.json.pickup }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "User Type",
+              "displayName": "User Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Food Type (Example: rice, vegetables, cooked food)  ",
+              "displayName": "Food Type (Example: rice, vegetables, cooked food)  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity (Example: 5 kg)",
+              "displayName": "Quantity (Example: 5 kg)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Time (Hours Old)  ",
+              "displayName": "Time (Hours Old)  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Condition  ",
+              "displayName": "Condition  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Contact Number",
+              "displayName": "Contact Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Food Category  ",
+              "displayName": "Food Category  ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Storage Condition",
+              "displayName": "Storage Condition",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pickup Availability",
+              "displayName": "Pickup Availability",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        560,
+        112
+      ],
+      "id": "799f69ca-5a6e-44cd-943c-98ace4ddbd83",
+      "name": "Append row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fd0fyuxAAklQebWx",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const hours_old = $json[\"hours_old\"];\nconst food = ($json[\"food_type\"] || \"\").toLowerCase();\nconst condition = ($json[\"condition\"] || \"\").toLowerCase();\nconst foodCategory = ($json[\"food_category\"] || \"\").toLowerCase();\n\n// broadened classification\nconst rawFoods = [\"vegetables\", \"fruits\", \"tomato\", \"tomatoes\", \"onion\", \"potato\", \"leafy greens\"];\nconst cookedFoods = [\"cooked rice\", \"dal\", \"chapati\"];\n\n// helper checks\nconst isRawFood = rawFoods.some(f => food.includes(f));\nconst isFresh = condition === \"fresh\" || foodCategory === \"raw\";\n\n// RULES (priority matters)\n\n// 1. Human donation: fresh + raw + safe time window\nif (hours_old <= 6 && isRawFood && isFresh) {\n  category = \"human\";\n  action = \"donate\";\n\n// 2. Cooked but still fresh\n} else if (hours_old <= 4 && cookedFoods.includes(food)) {\n  category = \"human\";\n  action = \"donate\";\n\n// 3. Animal feed fallback\n} else if (hours_old <= 6 && isRawFood) {\n  category = \"animal\";\n  action = \"feed farm\";\n\n// 4. Waste only if not safe\n} else {\n  category = \"waste\";\n  action = \"compost\";\n}\n\nreturn [{ json: { ...$json, category, action } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -176,
+        -80
+      ],
+      "id": "d9919962-81a3-4fa8-929c-ee5b2e1ba3dc",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message2": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "353aa1df-8ae0-4802-b28d-c4c2ced17626",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b981e5d74af0afecb0419eb49c7e7194e339824c89fedd5995ddef8f59e3f2f1"
+  },
+  "id": "hnSFmYsaLrLRhHCn",
+  "tags": []
+}
